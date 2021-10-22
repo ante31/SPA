@@ -1,0 +1,102 @@
+//Deklarirati strukturu Tocka koja sadrži dva člana: x i y (oba su float).
+//Deklarirati strukturu Poligon koja se sadrži dva člana: niz vrhova (svaki vrh u nizu
+//je Tocka) i broj vrhova n. Napisati funkcije za rad sa poligonima:
+
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct
+{
+    float x;
+    float y;
+}tocka;
+
+typedef struct
+{
+    tocka* lista;
+    int n;
+}poligon;
+
+
+poligon* novi_poligon(float *niz_x, float *niz_y, int n)
+{
+    if(n<=3)
+        {
+            poligon *p;
+            p->lista = (tocka*) malloc(sizeof(tocka)*n);
+
+            for(int i=0; i<n; i++)
+            {
+                p->lista[i].x = niz_x[i];
+                p->lista[i].y = niz_y[i];
+            }
+
+            return p;
+        }
+    else
+    {
+        printf("Broj tocaka mora biti veci od 2!");
+        return NULL;
+    }
+}
+
+tocka** pozitivni(poligon *p, int *np)
+{
+    tocka** poz;
+    int j=0, brojac=0;
+    for(int i=0; i<(*np); i++)
+    {
+        if((0 < p->lista[i].x)&&(0 < p->lista[i].y))
+        {
+            brojac++;
+        }
+    }
+
+    poz = (tocka**) malloc(sizeof(tocka*)* brojac);
+
+    for(int i=0; i<(*np); i++)
+    {
+        if((0 > p->lista[i].x)&&(0 > p->lista[i].y))
+        {
+            poz[j]->x = p->lista[i].x;
+            poz[j]->y = p->lista[i].y;
+            j++;
+        }
+    }
+    printf("test %f\n", poz[j]->x);
+
+    *np=j;
+    return *poz;
+}
+
+int main()
+{
+    int n;
+
+    printf("Unesite broj tocaka: ");
+    scanf("%d", &n);
+
+    float* t_x = (float*) malloc(sizeof(float)*n);
+    float* t_y = (float*) malloc(sizeof(float)*n);
+
+    //Unos tocaka poligona
+    for(int i=0; i<n; i++)
+    {
+        printf("Unesi tocku (x, y): ");
+        scanf("%f %f", &t_x[i], &t_y[i]);
+    }
+
+    poligon* p = novi_poligon(t_x, t_y, n);
+
+    //Ispisivanje tocaka poligona
+    printf("Tocke poligona:\n");
+    for(int i=0; i<n; i++)
+    {
+        printf("x: %f   y: %f\n", p->lista[i].x, p->lista[i].y);
+    }
+
+    tocka** poz = pozitivni(p, &n);
+
+    printf("Negativne tocke:\n");
+    for(int i=0; i<n; i++)
+        printf("%f %f\n", poz[i]->x, poz[i]->y);
+}
