@@ -6,10 +6,9 @@ int cmpfunc(const void* a, const void* b) {
 }
 
 void presjek(int* niz, int* niz2, int sizeofNiz, int sizeofNiz2) {
-
 	for (int i = 0; i < sizeofNiz; i++)
 	{
-		int* item = (int*)bsearch(&niz[i], niz2, 4, sizeof(sizeofNiz2), cmpfunc);
+		int* item = (int*)bsearch(&niz[i], niz2, sizeofNiz2, sizeof(int), cmpfunc);
 		if (item) {
 			printf("%d ", *item);
 		}
@@ -34,13 +33,22 @@ int* generiraj(int n) {
 	return niz;
 }
 
+void printout(int* niz, int n) {
+	for (int i = 0; i < n; i++) {
+		printf("%d ", niz[i]);
+	}
+	printf("\n");
+}
+
 
 int main()
 {
 	int n = 5;
+	int niz2[] = { 1, 3, 7, 8, 12};
 	srand(time(NULL));
 	int* niz = generiraj(n);
-	int niz2[] = {1, 3, 7, 9, 12};
 	shuffle(niz, n);
-	presjek(niz, niz2, n, sizeof(niz2));
+	printout(niz, n);
+	printout(niz2, sizeof(niz2) / sizeof(niz2[0]));
+	presjek(niz, niz2, n, sizeof(niz2)/sizeof(niz2[0]));
 }
