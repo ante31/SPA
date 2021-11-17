@@ -1,0 +1,93 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct
+{
+    float x,y,z;
+}Vrh;
+
+typedef struct
+{
+    float nx,ny,nz;       
+    Vrh vrhovi[3];        
+    unsigned short color; 
+}Trokut;
+
+typedef struct
+{
+    Trokut*arr;
+    unsigned int num;
+}Objekt_3D;
+
+
+Objekt_3D* read_binary(FILE*fp)
+{
+    Objekt_3D* ob=(Objekt_3D*)malloc(sizeof(Objekt_3D));
+    fp=fopen("primjerbin.stl", "rb");
+    if(!fp)
+        return NULL;
+    fseek(fp, 80, SEEK_SET);
+    fread(&(ob->num), sizeof(unsigned int), 1, fp);
+    ob->arr = (Trokut*)malloc(sizeof(Trokut) * ob->num);
+    int i=0;
+    while(!feof(fp))
+    {
+        fread(&(ob->arr[i]), 50, 1, fp);
+        i++;
+    }
+    fclose(fp);
+    return ob;
+}
+
+void write_bin(FILE*fp, Objekt_3D*ob)
+{
+    fp=fopen("write.stl", "wb");
+    if(!fp)
+        printf("Neuspjelo otvaranje datoteke\n");
+    int zero[20] = {0};
+    fwrite(zero, sizeof(zero[0]), 20, fp);
+    fwrite(&(ob->num), sizeof(ob->num), 1, fp);
+    int i=0;
+    for(i; i<ob->num; ++i)
+    {
+        fwrite(&(ob->arr[i]), 50, 1, fp);
+    }
+    fclose(fp);
+}
+void write_txt(FILE*fp,Objekt_3D*ob)
+{
+    fp=fopen("write.txt", "wt");
+    if(!fp)
+        printf("Neuspjelo otvaranje datoteke\n");
+    char line1[]={"facet normal"};
+    char line2[]={" outer loop"};
+    char line3[]={"  vertex"};
+    char line4[]={" endloop"};
+    char line5[]={"endfacet"};
+    for(int i=0; i<ob->num; ++i)
+    {
+        fprintf(fp, "%s %f %f %f\n", line1, ob->arr[i].nx, ob->arr[i].ny, ob->arr[i].nz);
+        fprintf(fp, "%s\n", line2);
+        fprintf(fp, "%s %f %f %f\n",line3, ob->arr[i].vrhovi[0].x, ob->arr[i].vrhovi[0].y, ob->arr[i].vrhovi[0].z);
+        fprintf(fp, "%s %f %f %f\n",line3, ob->arr[i].vrhovi[1].x, ob->arr[i].vrhovi[1].y, ob->arr[i].vrhovi[1].z);
+        fprintf(fp, "%s %f %f %f\n",line3, ob->arr[i].vrhovi[2].x, ob->arr[i].vrhovi[2].y, ob->arr[i].vrhovi[2].z);
+        fprintf(fp, "%s\n", line4);
+        fprintf(fp, "%s\n", line5);
+    }
+    fclose(fp);
+}
+void delete_Objekt_3D(Objekt_3D*ob)
+{
+    free(ob->arr);
+    free(ob);
+}
+int main(void)
+{
+    FILE*fp=NULL;
+    Objekt_3D*ob=read_binary(fp);
+    FILE*fp1=NULL;
+    write_bin(fp1, ob);
+    FILE*fp2=NULL;
+    write_txt(fp2, ob);
+    delete_Objekt_3D(ob);
+    return 0;
+}
