@@ -7,10 +7,10 @@ int cmpfunc(const void* a, const void* b) {
 	return (*(int*)a - *(int*)b);
 }
 
-void presjek(int* niz, int* niz2, int sizeofNiz, int sizeofNiz2) {
-	for (int i = 0; i < sizeofNiz; i++)
+void presjek(int* niz, int* niz2, int n) {
+	for (int i = 0; i < n; i++)
 	{
-		int* item = (int*)bsearch(&niz[i], niz2, sizeofNiz2, sizeof(int), cmpfunc);
+		int* item = (int*)bsearch(&niz[i], niz2, n, sizeof(int), cmpfunc);
 		if (item) {
 			printf("%d ", *item);
 		}
@@ -56,7 +56,7 @@ int main()
 	qsort(niz2, n, sizeof(int), cmpfunc);
 	printout(niz, n);
 	printout(niz2, n);
-	presjek(niz, niz2, n, sizeof(niz2) / sizeof(niz2[0]));
+	presjek(niz, niz2, n);
 	end_t = clock();
 	printf("Total time taken by CPU: %f\n", (double)(end_t - start_t) / CLOCKS_PER_SEC);
 }
