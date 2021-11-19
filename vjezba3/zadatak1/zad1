@@ -7,7 +7,7 @@ void intersect(int* niz, int* niz2, int n) {
 
 	for (int i = 0; i < n; i++)
 	{
-		for (int j = 0; j < 4; j++)
+		for (int j = 0; j < n; j++)
 		{
 			if (niz[i] == niz2[j])
 			{
