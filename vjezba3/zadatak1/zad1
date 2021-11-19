@@ -1,22 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 #define min(a,b) (((a)<(b))?(a):(b))
 
-
-int cmpfunc(const void* a, const void* b) {
-	return (*(int*)a - *(int*)b);
-}
-
-int* presjek(int* niz, int* niz2, int n, int m) {
+int* intersect(int* niz, int* niz2, int n, int m) {
 	int* niz3 = (int*)malloc(sizeof(int) * min(n, m));
 	int k = 0;
 	for (int i = 0; i < n; i++)
 	{
-		int* item = (int*)bsearch(&niz[i], niz2, n, sizeof(int), cmpfunc);
-		if (item) {
-			niz3[k] = *item;
-			k++;
+		for (int j = 0; j < m; j++)
+		{
+			if (niz[i] == niz2[j])
+			{
+				niz[k] = niz[i];
+				k++;
+			}
 		}
 	}
 	return niz3;
@@ -57,11 +56,11 @@ int main()
 	int n = 3000, m = 3000;
 	srand(time(NULL));
 	int* niz = generiraj(n);
-	shuffle(niz, n);
 	int* niz2 = generiraj(m);
+	shuffle(niz, n);
+	shuffle(niz2, m);
 	start_t = clock();
-	qsort(niz2, n, sizeof(int), cmpfunc);
-	int* niz3 = presjek(niz, niz2, n, m);
+	int* niz3 = intersect(niz, niz2, n, m);
 	free_memory(niz3);
 	end_t = clock();
 	printf("Total time taken by CPU: %f\n", (double)(end_t - start_t) / CLOCKS_PER_SEC);
