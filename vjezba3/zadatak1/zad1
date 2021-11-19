@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 
 void intersect(int* niz, int* niz2, int n) {
 
@@ -9,10 +11,11 @@ void intersect(int* niz, int* niz2, int n) {
 		{
 			if (niz[i] == niz2[j])
 			{
-				printf("%d", niz[i]);
+				printf("%d ", niz[i]);
 			}
 		}
 	}
+	printf("\n");
 }
 
 void shuffle(int* niz, int n) {
@@ -42,13 +45,17 @@ void printout(int* niz, int n) {
 
 int main()
 {
-	int n = 5;
+	clock_t start_t, end_t;
+	start_t = clock();
+	int n = 30;
 	srand(time(NULL));
 	int* niz = generiraj(n);
 	int* niz2 = generiraj(n);
 	shuffle(niz, n);
-  printout(niz, n);
+	printout(niz, n);
 	shuffle(niz2, n);
-  printout(niz2, n);
+	printout(niz2, n);
 	intersect(niz, niz2, n);
+	end_t = clock();
+	printf("Total time taken by CPU: %f\n", (double)(end_t - start_t) / CLOCKS_PER_SEC);
 }
