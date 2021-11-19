@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 
 int cmpfunc(const void* a, const void* b) {
 	return (*(int*)a - *(int*)b);
@@ -13,6 +15,7 @@ void presjek(int* niz, int* niz2, int sizeofNiz, int sizeofNiz2) {
 			printf("%d ", *item);
 		}
 	}
+	printf("\n");
 }
 
 void shuffle(int* niz, int n) {
@@ -43,12 +46,17 @@ void printout(int* niz, int n) {
 
 int main()
 {
-	int n = 5;
-	int niz2[] = { 1, 3, 7, 8, 12};
+	clock_t start_t, end_t;
+	start_t = clock();
+	int n = 30;
 	srand(time(NULL));
 	int* niz = generiraj(n);
 	shuffle(niz, n);
+	int* niz2 = generiraj(n);
+	qsort(niz2, n, sizeof(int), cmpfunc);
 	printout(niz, n);
-	printout(niz2, sizeof(niz2) / sizeof(niz2[0]));
-	presjek(niz, niz2, n, sizeof(niz2)/sizeof(niz2[0]));
+	printout(niz2, n);
+	presjek(niz, niz2, n, sizeof(niz2) / sizeof(niz2[0]));
+	end_t = clock();
+	printf("Total time taken by CPU: %f\n", (double)(end_t - start_t) / CLOCKS_PER_SEC);
 }
