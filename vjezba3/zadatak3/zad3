@@ -48,10 +48,6 @@ int* presjekPoredanihNizova(int* niz, int* niz2, int n, int m) {
 	return niz3;
 }
 
-void free_memory(int* niz) {
-	free(niz);
-}
-
 int main()
 {
 	clock_t start_t, end_t;
@@ -65,7 +61,7 @@ int main()
 	qsort(niz, n, sizeof(int), cmpfunc);
 	qsort(niz2, m, sizeof(int), cmpfunc);
 	int* niz3 = presjekPoredanihNizova(niz, niz2, n, m);
-	free_memory(niz3);
+	free(niz3);
 	end_t = clock();
 	printf("Total time taken by CPU: %f\n", (double)(end_t - start_t) / CLOCKS_PER_SEC);
 }
