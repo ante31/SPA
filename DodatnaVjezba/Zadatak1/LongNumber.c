@@ -92,7 +92,7 @@ LongNumber add_longnum(LongNumber a, LongNumber b)
 	tmpB = reverse(tmpB);
 	LongNumber tmptmpA = tmpA;
 	LongNumber tmptmpB = tmpB;
-	
+
 	while (tmpA != NULL && tmpB != NULL)
 	{
 		int broj = tmpA->z + tmpB->z;
@@ -112,7 +112,7 @@ LongNumber add_longnum(LongNumber a, LongNumber b)
 	}
 	while (tmpA != NULL) {
 		//a jos postoji
-		c = dodaj_u_glavu(c, (tmpA->z+ostatak)%10);
+		c = dodaj_u_glavu(c, (tmpA->z + ostatak) % 10);
 		if (a->z + ostatak > 9) {
 			ostatak = 1;
 		}
@@ -193,7 +193,9 @@ LongNumber mul_by_pow10(LongNumber num, int pow)
 LongNumber mul_longnum(LongNumber numa, LongNumber numb)
 {
 	LongNumber pomocni = NULL;
+	LongNumber pomocni2 = NULL;
 	LongNumber numf = NULL;
+	LongNumber numf2 = NULL;
 	LongNumber tmpA = numa;
 	LongNumber tmpB = numb;
 	int br = 0;
@@ -203,11 +205,14 @@ LongNumber mul_longnum(LongNumber numa, LongNumber numb)
 	while (tmpB != NULL)
 	{
 		pomocni = mul_by_pow10(tmpA, i);
-		pomocni = mul_by_digit(pomocni, tmpB->z);
+		pomocni2 = mul_by_digit(pomocni, tmpB->z);
 		i++;
-		numf = add_longnum(numf, pomocni);
+		numf2 = add_longnum(numf, pomocni2);
+		delete_longnum(numf); //BRISANJE NUMF
+		numf = numf2;
 		tmpB = tmpB->next;
-		delete_longnum(pomocni);
+		delete_longnum(pomocni); //BRISANJE POMOCNOG
+		delete_longnum(pomocni2); //BRISANJE DRUGOG POMOCNOG
 	}
 	tmptmpB = reverse(tmpB);
 	delete_longnum(tmpB);
