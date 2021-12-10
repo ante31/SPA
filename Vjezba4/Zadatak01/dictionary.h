@@ -25,6 +25,6 @@ void destroy(Dictionary dict);
 
 int filter(Word* w);
 
-Dictionary filterDictionary(Dictionary indict, int(*filter)(Word* w));
+Dictionary filterDictionary(Dictionary indict);
 
 #endif
