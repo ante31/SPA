@@ -137,8 +137,7 @@ LongNumber add_longnum(LongNumber a, LongNumber b)
 	{
 		c = dodaj_u_glavu(c, ostatak);
 	}
-	delete_longnum(tmpA);
-	delete_longnum(tmpB);
+
 	a = reverse(tmptmpA);
 	b = reverse(tmptmpB);
 	return c;
@@ -171,7 +170,6 @@ LongNumber mul_by_digit(LongNumber num, int x)
 		numd = dodaj_u_glavu(numd, ostatak);
 	}
 	num = reverse(tmptmp);
-	delete_longnum(tmp);
 	return numd;
 }
 LongNumber mul_by_pow10(LongNumber num, int pow)
@@ -209,9 +207,9 @@ LongNumber mul_longnum(LongNumber numa, LongNumber numb)
 		i++;
 		numf = add_longnum(numf, pomocni);
 		tmpB = tmpB->next;
+		delete_longnum(pomocni);
 	}
 	tmptmpB = reverse(tmpB);
 	delete_longnum(tmpB);
-	delete_longnum(pomocni);
 	return numf;
 }
