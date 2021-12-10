@@ -68,7 +68,7 @@ int filter(Word* w)
 {
 	return (w->count >= 5 && w->count <= 10 && strlen(w->word) > 3);
 }
-Dictionary filterDictionary(Dictionary indict, int(*filter)(Word* w))
+Dictionary filterDictionary(Dictionary indict)
 {
 	Dictionary tmp = indict;
 	if (tmp->next == NULL)
