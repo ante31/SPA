@@ -45,7 +45,7 @@ void main()
 		//printf("%s\n", buffer);
 		add(dict, buffer);
 	}
-	dict2 = filterDictionary(dict, *filter);
+	dict2 = filterDictionary(dict);
 
 	print(dict2);
 
