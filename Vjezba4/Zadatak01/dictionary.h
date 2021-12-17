@@ -1,6 +1,10 @@
-#define _CRT_SECURE_NO_WARNINGS
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
+#include <string.h>
 
 typedef struct Word {
 	char* word; // rijec
@@ -23,8 +27,8 @@ void print(Dictionary dict);
 // briše cijeli rjeènik
 void destroy(Dictionary dict);
 
+//filtrira rjeènik
 int filter(Word* w);
-
 Dictionary filterDictionary(Dictionary indict);
 
 #endif
