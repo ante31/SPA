@@ -1,8 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
-#include <stdio.h>
-#include <ctype.h>
 #include "dictionary.h"
-#include <malloc.h>
 int readWord(FILE* fd, char* buffer)
 {
 	int c;
@@ -29,7 +25,7 @@ void main()
 {
 	FILE* fd;
 	char buffer[1024];
-	Dictionary dict, dict2;
+	Dictionary dict, dict2, dict3;
 
 	fd = fopen("liar.txt", "rt");
 	if (fd == NULL)
@@ -37,19 +33,22 @@ void main()
 		printf("Error opening file.\n");
 		return;
 	}
-
+	//dict=create()
 	dict = create();
+	dict3 = create();
 
 	while (readWord(fd, buffer))
 	{
+		//sve rijeèi
 		//printf("%s\n", buffer);
 		add(dict, buffer);
 	}
-	dict2 = filterDictionary(dict);
+	fclose(fd);
 
-	print(dict2);
+	dict = filterDictionary(dict);
+
+	print(dict);
 
 	destroy(dict);
 
-	destroy(dict2);
 }
