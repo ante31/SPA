@@ -41,7 +41,7 @@ void fillTable(HashTable *dict)
 	while(readWord(fd, buffer))
 	{
 		//printf("%s\n", buffer);
-		if(!Get(dict, buffer))
+		if(Get(dict, buffer))
 			Insert(dict, strdup(buffer));
 	}
 
