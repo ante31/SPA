@@ -7,7 +7,7 @@
 
 HashTable *NewTable(int size)
 {
-	// kreira novu hash tablicu (alocira samu strukturu i niz pokazivaèa)
+	// kreira novu hash tablicu (alocira samu strukturu i niz pokazivaÃ¨a)
 	HashTable *nova = (HashTable*)malloc(sizeof(HashTable));
 	nova->table = (Bin**)malloc(size * sizeof(Bin*));
 	nova->size = size;
@@ -50,11 +50,11 @@ int Get(HashTable *ht, char *word)
 	while (h != NULL)
 	{
 		if (strcmp(h->word, word) == 0)
-			return 1;
+			return 0;
 		else
 			h = h->next;
 	}
-	return 0;
+	return 1;
 }
 
 void DeleteTable(HashTable *ht)
